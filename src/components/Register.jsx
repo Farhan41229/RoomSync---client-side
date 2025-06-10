@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router';
+import { AuthContext } from '../provider/AuthProvider';
 
 const Register = () => {
+  const { setUser, CreateUser } = useContext(AuthContext);
+  const HandleRegister = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    console.log(email, password);
+    CreateUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+      })
+      .catch((error) => console.log(error));
+  };
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -21,7 +35,11 @@ const Register = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create an account
             </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form
+              onSubmit={HandleRegister}
+              className="space-y-4 md:space-y-6"
+              action="#"
+            >
               <div>
                 <label
                   htmlFor="email"
@@ -101,17 +119,15 @@ const Register = () => {
               >
                 Create an account
               </button>
-              <Link to={'/auth/login'}>
-                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                  Already have an account?{' '}
-                  <a
-                    href="#"
-                    className="font-medium text-[#2563eb] hover:underline dark:text-primary-500"
-                  >
-                    Login here
-                  </a>
-                </p>
-              </Link>
+              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                Already have an account?{' '}
+                <Link
+                  to={'/auth/login'}
+                  className="font-medium text-[#2563eb] hover:underline dark:text-primary-500"
+                >
+                  Login here
+                </Link>
+              </p>
             </form>
           </div>
         </div>

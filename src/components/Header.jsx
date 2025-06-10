@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router';
 import { AuthContext } from '../provider/AuthProvider';
+import Swal from 'sweetalert2';
 
 const links = (
   <>
@@ -17,8 +18,20 @@ const links = (
   </>
 );
 const Header = () => {
-  const { user } = useContext(AuthContext);
+  const { user, Logout } = useContext(AuthContext);
   console.log('User is: ', user);
+  const HandleLogout = (e) => {
+    e.preventDefault();
+    Logout()
+      .then(() => {
+        Swal.fire({
+          title: 'Logged out Successfully!',
+          icon: 'success',
+          draggable: true,
+        });
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <div className="navbar items-center  shadow-sm px-6 bg-stone-50">
@@ -59,14 +72,18 @@ const Header = () => {
       </div>
       <div className="navbar-end pt-2">
         {user ? (
-          <a className="btn w-[80px] lg:w-[150px] text-white bg-blue-800 text-lg  lg:text-xl  hover:text-blue-800 hover:bg-white transition-colors duration-[650ms] ">
+          <Link
+            onClick={HandleLogout}
+            className="btn w-[80px] lg:w-[150px] text-white bg-blue-800 text-lg  lg:text-xl  hover:text-blue-800 hover:bg-white transition-colors duration-[650ms] "
+          >
             Logout
-          </a>
+          </Link>
         ) : (
-          <Link to={'/auth/login'}>
-            <a className="btn w-[80px] lg:w-[150px] text-white bg-blue-800 text-lg  lg:text-xl  hover:text-blue-800 hover:bg-white transition-colors duration-[650ms] ">
-              Login
-            </a>
+          <Link
+            className="btn w-[80px] lg:w-[150px] text-white bg-blue-800 text-lg  lg:text-xl  hover:text-blue-800 hover:bg-white transition-colors duration-[650ms] "
+            to={'/auth/login'}
+          >
+            Login
           </Link>
         )}
       </div>
