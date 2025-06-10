@@ -15,6 +15,11 @@ const links = (
         Browse Listings
       </NavLink>
     </li>
+    <li>
+      <NavLink to={'/addlistings'} className={'text-xl font-semibold'}>
+        Add a Listing
+      </NavLink>
+    </li>
   </>
 );
 const Header = () => {
