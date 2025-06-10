@@ -1,17 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Link, NavLink } from 'react-router';
+import { AuthContext } from '../provider/AuthProvider';
+
 const links = (
   <>
     <li>
-      <a>Item 1</a>
+      <NavLink to={'/'} className={'text-xl font-semibold'}>
+        Home
+      </NavLink>
     </li>
     <li>
-      <a>Item 3</a>
+      <NavLink to={'/listings'} className={'text-xl font-semibold'}>
+        Browse Listings
+      </NavLink>
     </li>
   </>
 );
 const Header = () => {
+  const { user } = useContext(AuthContext);
+  console.log('User is: ', user);
+
   return (
-    <div className="navbar items-center bg-base-100 shadow-sm px-6 bg-stone-50">
+    <div className="navbar items-center  shadow-sm px-6 bg-stone-50">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -44,13 +54,21 @@ const Header = () => {
           </p>
         </a>
       </div>
-      <div className="navbar-center hidden lg:flex pt-2">
-        <ul className="menu menu-horizontal px-1">{links}</ul>
+      <div className="navbar-center hidden lg:flex pt-2 ">
+        <ul className="menu menu-horizontal px-1 flex gap-5">{links}</ul>
       </div>
       <div className="navbar-end pt-2">
-        <a className="btn w-[80px] lg:w-[150px] text-white bg-blue-800 text-lg  lg:text-xl  hover:text-blue-800 hover:bg-white transition-colors duration-[650ms] ">
-          Signout
-        </a>
+        {user ? (
+          <a className="btn w-[80px] lg:w-[150px] text-white bg-blue-800 text-lg  lg:text-xl  hover:text-blue-800 hover:bg-white transition-colors duration-[650ms] ">
+            Logout
+          </a>
+        ) : (
+          <Link to={'/auth/login'}>
+            <a className="btn w-[80px] lg:w-[150px] text-white bg-blue-800 text-lg  lg:text-xl  hover:text-blue-800 hover:bg-white transition-colors duration-[650ms] ">
+              Login
+            </a>
+          </Link>
+        )}
       </div>
     </div>
   );
