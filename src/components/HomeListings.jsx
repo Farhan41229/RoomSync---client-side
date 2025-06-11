@@ -4,12 +4,16 @@ import Listing from './Listing';
 import AOS from 'aos';
 import Aos from 'aos';
 import Swal from 'sweetalert2';
+import { AuthContext } from '../provider/AuthProvider';
 const HomeListings = ({ listingsPromise }) => {
   useEffect(() => {
     Aos.init();
   });
   const listings = use(listingsPromise);
   const [toplistings, setTopListings] = useState([]);
+  useEffect(() => {
+    setTopListings(listings);
+  }, [listings]);
   const HandleDeleteListing = (id) => {
     Swal.fire({
       title: 'Are you sure?',
@@ -42,9 +46,7 @@ const HomeListings = ({ listingsPromise }) => {
       }
     });
   };
-  useEffect(() => {
-    setTopListings(listings);
-  }, [listings]);
+
   // console.log(listings);
   return (
     <div className="lg:pl-5 lg:pr-5 p-5 space-y-7 ">

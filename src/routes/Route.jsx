@@ -24,11 +24,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: 'alllistings',
-        element: (
-          <PrivateRoute>
-            <AllListings></AllListings>
-          </PrivateRoute>
-        ),
+        element: <AllListings></AllListings>,
         loader: async () => {
           const response = await fetch('http://localhost:3000/listings');
           if (!response.ok) {
