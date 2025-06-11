@@ -11,12 +11,12 @@ const links = (
       </NavLink>
     </li>
     <li>
-      <NavLink to={'/listings'} className={'text-xl font-semibold'}>
+      <NavLink to={'/listings/allListings'} className={'text-xl font-semibold'}>
         Browse Listings
       </NavLink>
     </li>
     <li>
-      <NavLink to={'/addlistings'} className={'text-xl font-semibold'}>
+      <NavLink to={'/listings/addlisting'} className={'text-xl font-semibold'}>
         Add a Listing
       </NavLink>
     </li>
@@ -24,7 +24,7 @@ const links = (
 );
 const Header = () => {
   const { user, Logout } = useContext(AuthContext);
-  console.log('User is: ', user);
+  // console.log('User is: ', user);
   const HandleLogout = (e) => {
     e.preventDefault();
     Logout()
