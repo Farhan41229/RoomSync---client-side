@@ -26,13 +26,13 @@ const Banner = () => {
   }, []);
 
   return (
-    <div className="pl-10 pr-5 my-10 lg:flex justify-between items-center gap-10 space-y-10 lg:space-y-0">
+    <div className="lg:pl-10 lg:pr-5 p-5 mt-10 pb-10 lg:flex justify-between items-center gap-10 space-y-10 lg:space-y-0 min-h-screen">
       <div className=" lg:text-start text-center w-full lg:w-[40%]">
         <h1
           data-aos="fade-up"
           data-aos-once="true"
           data-aos-anchor-placement="top-bottom"
-          className="text-6xl font-bold"
+          className="text-6xl font-bold h-[230px] "
           data-aos-duration="1000"
         >
           THE PLACE TO <br />
@@ -60,7 +60,7 @@ const Banner = () => {
       >
         <img
           className="bg-gray-600 lg:w-[800px] lg:h-[800px] lg:object-center"
-          src="/assets/Banner/Banner City.jpg"
+          src="/assets/Banner/Banner City 2.jpg"
           alt=""
         />
       </div>

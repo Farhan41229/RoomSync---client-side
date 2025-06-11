@@ -1,28 +1,22 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router';
 import Listing from './Listing';
 import { AuthContext } from '../provider/AuthProvider';
 
 const AllListings = () => {
   const [listings, setListings] = useState([]);
-  const { UserLoading } = useContext(AuthContext);
+
   const data = useLoaderData();
   //   console.log(data);
   useEffect(() => {
     setListings(data);
   }, [data]);
 
-  if (UserLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <span className="loading loading-bars loading-xl"></span>
-      </div>
-    );
-  }
-
   return (
     <div className="px-10 py-10 bg-stone-50 min-h-screen">
-      <div className="divider mb-10 text-xl font-bold lg:text-3xl">Explore Our listings-({listings.length})</div>
+      <div className="divider mb-10 text-xl font-bold lg:text-3xl">
+        Explore Our listings-({listings.length})
+      </div>
       <div className="grid grid-cols-1  gap-10">
         {listings.map((listing) => (
           <Listing key={listing._id} listing={listing}></Listing>

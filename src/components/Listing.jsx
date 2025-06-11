@@ -31,16 +31,16 @@ const Listing = ({ listing }) => {
       data-aos-once="true"
       data-aos-anchor-placement="top-bottom"
       data-aos-duration="3000"
-      className="card lg:card-side bg-base-100 shadow-sm transition-all duration-1000 ease-in-out transform hover:scale-105"
+      className="card lg:card-side bg-base-100 shadow-sm transition-all duration-1000 ease-in-out transform "
     >
       <figure className="lg:w-[700px] lg:h-auto">
-        <img src={photo} alt="Album" />
+        <img className='w-full' src={photo} alt="Album" />
       </figure>
 
       <div className="card-body space-y-5">
         <h2 className="card-title text-3xl text-center font-bold">{title}</h2>
-        <p className="flex justify-start h-[30px] items-center font-bold text-[16px] lg:text-3xl">
-          <MdMapsHomeWork className="lg:text-5xl mr-2 text-5xl" /> Location :{' '}
+        <p className="flex lg:w-[700px] justify-start h-[30px] items-center font-bold text-[16px] lg:text-3xl">
+          <MdMapsHomeWork className="lg:text-6xl mr-2 text-5xl" /> Location :{' '}
           {location}
         </p>
         <div className="divider text-xl">TAGS</div>
@@ -51,7 +51,7 @@ const Listing = ({ listing }) => {
           <div className="badge badge-outline text-xl p-5 w-full">
             <PiBuildingApartmentLight /> Room Type : {roomType}
           </div>
-          <div className="badge badge-outline text-base lg:text-lg p-5 w-full flex items-center">
+          <div className="badge badge-outline text-base lg:text-base   p-5 w-full flex items-center">
             <IoPerson /> LifeStyle Preference : {lifestylePreferences}
           </div>
           <div className="badge badge-outline text-xl p-5 w-full">
