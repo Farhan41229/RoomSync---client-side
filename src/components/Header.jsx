@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 
 const Header = () => {
   const { user, Logout, setDBuser, DBuser } = useContext(AuthContext);
+  // console.log(user);
   const links = (
     <>
       <li>
@@ -28,7 +29,7 @@ const Header = () => {
           Add a Listing
         </NavLink>
       </li>
-      {user.email && (
+      {user && (
         <li>
           <NavLink
             to={'/listings/mylisttings'}

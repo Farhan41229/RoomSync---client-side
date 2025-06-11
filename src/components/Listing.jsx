@@ -12,13 +12,14 @@ import AOS from 'aos';
 import { Link } from 'react-router';
 
 const Listing = ({ listing, HandleDeleteListing }) => {
+  
   const { user } = useContext(AuthContext);
   let admin = false;
   if (listing.userEmail == user.email) {
-    console.log(`The title is ${listing.title} and the result is true`);
+    // console.log(`The title is ${listing.title} and the result is true`);
     admin = true;
   } else {
-    console.log(`The title is ${listing.title} and the result is false`);
+    // console.log(`The title is ${listing.title} and the result is false`);
   }
   useEffect(() => {
     AOS.init();
@@ -57,7 +58,7 @@ const Listing = ({ listing, HandleDeleteListing }) => {
           <div>
             <div className="divider text-2xl font-bold">Admin Control</div>
             <div className="flex justify-between px-14 py-2">
-              <Link to={`/listings/updatelisttings/:${_id}`}>
+              <Link to={`/listings/updatelisting/${_id}`}>
                 <FaPencilAlt
                   size={40}
                   className="p-1 bg-yellow-400 hover:bg-yellow-500 transition-all ease-in-out duration-1000 text-white hover:cursor-pointer "

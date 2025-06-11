@@ -10,6 +10,8 @@ import PrivateRoute from '../components/PrivateRoute';
 import ListingsLayout from '../layouts/ListingsLayout';
 import AllListings from '../components/AllListings';
 import MyListings from '../components/MyListings';
+import ListingDetails from '../components/ListingDetails';
+import UpdateListing from '../components/UpdateListing';
 
 const router = createBrowserRouter([
   {
@@ -22,9 +24,47 @@ const router = createBrowserRouter([
     children: [
       {
         path: 'alllistings',
-        element: <AllListings></AllListings>,
+        element: (
+          <PrivateRoute>
+            <AllListings></AllListings>
+          </PrivateRoute>
+        ),
         loader: async () => {
           const response = await fetch('http://localhost:3000/listings');
+          if (!response.ok) {
+            throw new Error('Failed to fetch listings');
+          }
+          return response.json(); // Ensure this returns the data
+        },
+      },
+      {
+        path: 'updatelisting/:id',
+        element: (
+          <PrivateRoute>
+            <UpdateListing></UpdateListing>
+          </PrivateRoute>
+        ),
+        loader: async ({ params }) => {
+          const response = await fetch(
+            `http://localhost:3000/listings/${params.id}`
+          );
+          if (!response.ok) {
+            throw new Error('Failed to fetch listings');
+          }
+          return response.json(); // Ensure this returns the data
+        },
+      },
+      {
+        path: 'listingDetails/:id',
+        element: (
+          <PrivateRoute>
+            <ListingDetails></ListingDetails>
+          </PrivateRoute>
+        ),
+        loader: async ({ params }) => {
+          const response = await fetch(
+            `http://localhost:3000/listings/${params.id}`
+          );
           if (!response.ok) {
             throw new Error('Failed to fetch listings');
           }
