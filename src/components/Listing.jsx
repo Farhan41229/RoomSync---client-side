@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { MdMapsHomeWork } from 'react-icons/md';
 import { FaMoneyBillWave } from 'react-icons/fa';
 import { PiBuildingApartmentLight } from 'react-icons/pi';
@@ -12,17 +12,20 @@ import AOS from 'aos';
 import { Link } from 'react-router';
 
 const Listing = ({ listing, HandleDeleteListing }) => {
+  const { user } = useContext(AuthContext);
   // if (user == null) {
   //   return <div></div>;
   // }
 
   let admin = false;
-  // if (listing.userEmail == user.email) {
-  //   // console.log(`The title is ${listing.title} and the result is true`);
-  //   admin = true;
-  // } else {
-  //   // console.log(`The title is ${listing.title} and the result is false`);
-  // }
+  if (user != null) {
+    if (listing.userEmail == user.email) {
+      // console.log(`The title is ${listing.title} and the result is true`);
+      admin = true;
+    } else {
+      // console.log(`The title is ${listing.title} and the result is false`);
+    }
+  }
   useEffect(() => {
     AOS.init();
   }, []);
