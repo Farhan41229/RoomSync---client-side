@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLoaderData } from 'react-router';
+import Swal from 'sweetalert2';
 
 const UpdateListing = () => {
   const [availability, setAvailability] = useState(false);
@@ -8,7 +9,38 @@ const UpdateListing = () => {
   };
   const data = useLoaderData();
   console.log(data);
+  const HandleUpdateCoffee = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const ListingData = Object.fromEntries(formData.entries());
+
+    // Add availability value based on checkbox state
+    ListingData.availability = availability ? 'Available' : 'Not Available';
+
+    console.log(ListingData); // Now you will get the correctly structured object with availability
+    // Send updated Listing to the DB
+    fetch(`http://localhost:3000/listings/${_id}`, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(ListingData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+          Swal.fire({
+            title: 'Updated listing successfully',
+            icon: 'success',
+            draggable: true,
+          });
+        }
+      });
+  };
+  //   Destructuring
   const {
+    _id,
     title,
     location,
     rentAmount,
@@ -30,7 +62,10 @@ const UpdateListing = () => {
         using Lorem Ipsum is that it has a more-or-less normal distribution of
         letters, as opposed to using Content here.
       </p>
-      <form className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <form
+        onSubmit={HandleUpdateCoffee}
+        className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+      >
         <fieldset className="fieldset">
           <legend className="fieldset-legend raleway text-xl font-semibold ">
             Title
