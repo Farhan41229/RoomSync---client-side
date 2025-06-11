@@ -156,7 +156,7 @@ const AddListing = () => {
             name="userEmail" // Corrected name
             className="input w-full"
             placeholder="Enter User Email"
-            defaultValue={DBuser.email}
+            value={DBuser.email}
           />
         </fieldset>
         <fieldset className="fieldset">
@@ -168,7 +168,7 @@ const AddListing = () => {
             name="userName" // Corrected name
             className="input w-full"
             placeholder="Enter User Name"
-            defaultValue={DBuser.name}
+            value={DBuser.name}
           />
         </fieldset>
         <fieldset className="fieldset col-span-1">

@@ -3,12 +3,45 @@ import { useState } from 'react';
 import Listing from './Listing';
 import AOS from 'aos';
 import Aos from 'aos';
+import Swal from 'sweetalert2';
 const HomeListings = ({ listingsPromise }) => {
   useEffect(() => {
     Aos.init();
   });
   const listings = use(listingsPromise);
   const [toplistings, setTopListings] = useState([]);
+  const HandleDeleteListing = (id) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Delete Listing from MongoDB
+        fetch(`http://localhost:3000/listings/${id}`, {
+          method: 'DELETE',
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.deletedCount > 0) {
+              Swal.fire({
+                title: 'Deleted!',
+                text: 'Your file has been deleted.',
+                icon: 'success',
+              });
+              const remainingListings = toplistings.filter(
+                (listing) => listing._id != id
+              );
+              setTopListings(remainingListings);
+            }
+          });
+      }
+    });
+  };
   useEffect(() => {
     setTopListings(listings);
   }, [listings]);
@@ -35,7 +68,11 @@ const HomeListings = ({ listingsPromise }) => {
       </div>
       <div className="grid grid-cols-1 gap-12">
         {toplistings.map((listing) => (
-          <Listing key={listing._id} listing={listing}></Listing>
+          <Listing
+            HandleDeleteListing={HandleDeleteListing}
+            key={listing._id}
+            listing={listing}
+          ></Listing>
         ))}
       </div>
     </div>
