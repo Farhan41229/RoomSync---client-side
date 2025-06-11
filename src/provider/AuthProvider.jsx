@@ -8,39 +8,59 @@ import {
   signInWithPopup,
 } from 'firebase/auth';
 import { auth } from '../firebase/firebase.init';
+
 export const AuthContext = createContext();
+
 const AuthProvider = ({ children }) => {
   const provider = new GoogleAuthProvider();
   const [user, setUser] = useState(null);
+  const [DBuser, setDBuser] = useState(null);
   const [UserLoading, setUserLoading] = useState(true);
-  // console.log(user);
+
   const CreateUser = (email, password) => {
     setUserLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
+
   const Logout = () => {
     setUserLoading(false);
     return signOut(auth);
   };
+
   const userLogin = (email, password) => {
     setUserLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
+
   const GoggleLogin = () => {
     setUserLoading(true);
     return signInWithPopup(auth, provider);
   };
+
   // OnAuthStateChanged Function
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
+      if (currentUser && currentUser.email) {
+        try {
+          // Fetch the MongoDB user using the Firebase user email
+          const response = await fetch(
+            `http://localhost:3000/users/${currentUser.email}`
+          );
+          const currentDBuser = await response.json();
+          console.log(currentDBuser); // You can remove this after testing
+          setDBuser(currentDBuser); // Set the MongoDB user data
+        } catch (error) {
+          console.error('Error fetching MongoDB user:', error);
+        }
+      }
       setUserLoading(false);
     });
+
     return () => {
       unsubscribe();
     };
-  }, []);
-  // Function Finished
+  }, []); // Empty dependency array means this effect runs once on component mount
 
   const AuthData = {
     user,
@@ -51,8 +71,13 @@ const AuthProvider = ({ children }) => {
     setUserLoading,
     UserLoading,
     GoggleLogin,
+    DBuser, // Pass the MongoDB user to the context
+    setDBuser,
   };
-  return <AuthContext value={AuthData}>{children}</AuthContext>;
+
+  return (
+    <AuthContext.Provider value={AuthData}>{children}</AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;

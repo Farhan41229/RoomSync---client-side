@@ -3,27 +3,43 @@ import { Link, NavLink } from 'react-router';
 import { AuthContext } from '../provider/AuthProvider';
 import Swal from 'sweetalert2';
 
-const links = (
-  <>
-    <li>
-      <NavLink to={'/'} className={'text-xl font-semibold'}>
-        Home
-      </NavLink>
-    </li>
-    <li>
-      <NavLink to={'/listings/allListings'} className={'text-xl font-semibold'}>
-        Browse Listings
-      </NavLink>
-    </li>
-    <li>
-      <NavLink to={'/listings/addlisting'} className={'text-xl font-semibold'}>
-        Add a Listing
-      </NavLink>
-    </li>
-  </>
-);
 const Header = () => {
-  const { user, Logout } = useContext(AuthContext);
+  const { user, Logout, setDBuser, DBuser } = useContext(AuthContext);
+  const links = (
+    <>
+      <li>
+        <NavLink to={'/'} className={'text-xl font-semibold'}>
+          Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to={'/listings/allListings'}
+          className={'text-xl font-semibold'}
+        >
+          Browse Listings
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to={'/listings/addlisting'}
+          className={'text-xl font-semibold'}
+        >
+          Add a Listing
+        </NavLink>
+      </li>
+      {user.email && (
+        <li>
+          <NavLink
+            to={'/listings/mylisttings'}
+            className={'text-xl font-semibold'}
+          >
+            My listings
+          </NavLink>
+        </li>
+      )}
+    </>
+  );
   // console.log('User is: ', user);
   const HandleLogout = (e) => {
     e.preventDefault();
@@ -34,6 +50,8 @@ const Header = () => {
           icon: 'success',
           draggable: true,
         });
+        setDBuser(null);
+        console.log(DBuser);
       })
       .catch((error) => console.log(error));
   };

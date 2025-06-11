@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Swal from 'sweetalert2';
+import { AuthContext } from '../provider/AuthProvider';
 
 const AddListing = () => {
   const [availability, setAvailability] = useState(false); // State to handle the checkbox
+  const { DBuser } = useContext(AuthContext);
+  console.log(DBuser);
 
   const HandleAddListing = (e) => {
     e.preventDefault();
@@ -42,11 +45,11 @@ const AddListing = () => {
   };
 
   return (
-    <div className="py-[70px] px-[112px] bg-stone-50 space-y-8">
+    <div className="lg:py-[70px] lg:px-[112px] p-10 bg-stone-50 space-y-8">
       <h1 className="text-[45px] text-[#374151] text-center font-normal rancho">
         Add New Listing
       </h1>
-      <p className="raleway w-[900px] text-lg text-center mx-auto text-[rgba(27,26,26,0.7)]">
+      <p className="raleway lg:w-[900px] text-lg text-center mx-auto text-[rgba(27,26,26,0.7)]">
         It is a long established fact that a reader will be distracted by the
         readable content of a page when looking at its layout. The point of
         using Lorem Ipsum is that it has a more-or-less normal distribution of
@@ -54,7 +57,7 @@ const AddListing = () => {
       </p>
       <form
         onSubmit={HandleAddListing}
-        className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+        className="grid grid-cols-1 gap-6"
       >
         <fieldset className="fieldset">
           <legend className="fieldset-legend raleway text-xl font-semibold ">
@@ -153,7 +156,7 @@ const AddListing = () => {
             name="userEmail" // Corrected name
             className="input w-full"
             placeholder="Enter User Email"
-            defaultValue={'ayon55928@gmail.com'}
+            defaultValue={DBuser.email}
           />
         </fieldset>
         <fieldset className="fieldset">
@@ -165,7 +168,7 @@ const AddListing = () => {
             name="userName" // Corrected name
             className="input w-full"
             placeholder="Enter User Name"
-            defaultValue={'Farhan Tahsin Khan'}
+            defaultValue={DBuser.name}
           />
         </fieldset>
         <fieldset className="fieldset col-span-1">

@@ -1,35 +1,73 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router';
 import { AuthContext } from '../provider/AuthProvider';
+import Swal from 'sweetalert2';
 
 const Register = () => {
-  const { setUser, CreateUser } = useContext(AuthContext);
+  const { setUser, CreateUser, setDBuser, DBuser } = useContext(AuthContext);
   const HandleRegister = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password);
+    const name = e.target.name.value;
+    const photoUrl = e.target.photourl.value;
+    const dbuser = {
+      email,
+      name,
+      photoUrl,
+    };
+
+    // Create a Firebase user
     CreateUser(email, password)
       .then((result) => {
         const user = result.user;
         setUser(user);
+
+        // Add the user to MongoDB
+        fetch('http://localhost:3000/users', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(dbuser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log('Data after adding the user', data);
+
+            // Set the MongoDB user data in the state
+            setDBuser(data); // Use the MongoDB data returned from the server
+
+            Swal.fire({
+              title: 'User Registered Successfully',
+              icon: 'success',
+              draggable: true,
+            });
+          })
+          .catch((error) => {
+            console.log('Error adding MongoDB user:', error);
+            Swal.fire({
+              title: 'Error adding user',
+              icon: 'error',
+              text: error.message,
+              draggable: true,
+            });
+          });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        Swal.fire({
+          title: 'Registration Error',
+          icon: 'error',
+          text: error.message,
+          draggable: true,
+        });
+      });
   };
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <a
-          href="#"
-          className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
-        >
-          <img
-            className="w-8 h-8 mr-2"
-            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
-            alt="logo"
-          />
-          Flowbite
-        </a>
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
@@ -40,6 +78,22 @@ const Register = () => {
               className="space-y-4 md:space-y-6"
               action="#"
             >
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Name
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  placeholder="Enter Your Name"
+                  required
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#2563eb] focus:border-[#2563eb] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </div>
               <div>
                 <label
                   htmlFor="email"
@@ -58,6 +112,22 @@ const Register = () => {
               </div>
               <div>
                 <label
+                  htmlFor="photourl"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Photourl
+                </label>
+                <input
+                  type="url"
+                  name="photourl"
+                  id="photourl"
+                  placeholder="Enter your PhotoURL"
+                  required
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#2563eb] focus:border-[#2563eb] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </div>
+              <div>
+                <label
                   htmlFor="password"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
@@ -67,22 +137,6 @@ const Register = () => {
                   type="password"
                   name="password"
                   id="password"
-                  placeholder="••••••••"
-                  required
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#2563eb] focus:border-[#2563eb] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="confirm-password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Confirm password
-                </label>
-                <input
-                  type="password"
-                  name="confirm-password"
-                  id="confirm-password"
                   placeholder="••••••••"
                   required
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#2563eb] focus:border-[#2563eb] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

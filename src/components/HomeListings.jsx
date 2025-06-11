@@ -12,7 +12,7 @@ const HomeListings = ({ listingsPromise }) => {
   useEffect(() => {
     setTopListings(listings);
   }, [listings]);
-  console.log(listings);
+  // console.log(listings);
   return (
     <div className="lg:pl-5 lg:pr-5 p-5 space-y-7 ">
       <h1
@@ -35,7 +35,7 @@ const HomeListings = ({ listingsPromise }) => {
       </div>
       <div className="grid grid-cols-1 gap-12">
         {toplistings.map((listing) => (
-          <Listing listing={listing}></Listing>
+          <Listing key={listing._id} listing={listing}></Listing>
         ))}
       </div>
     </div>

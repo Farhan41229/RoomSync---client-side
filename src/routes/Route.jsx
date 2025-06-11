@@ -9,6 +9,7 @@ import AddListing from '../components/AddListing';
 import PrivateRoute from '../components/PrivateRoute';
 import ListingsLayout from '../layouts/ListingsLayout';
 import AllListings from '../components/AllListings';
+import MyListings from '../components/MyListings';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,21 @@ const router = createBrowserRouter([
       {
         path: 'alllistings',
         element: <AllListings></AllListings>,
+        loader: async () => {
+          const response = await fetch('http://localhost:3000/listings');
+          if (!response.ok) {
+            throw new Error('Failed to fetch listings');
+          }
+          return response.json(); // Ensure this returns the data
+        },
+      },
+      {
+        path: 'mylisttings',
+        element: (
+          <PrivateRoute>
+            <MyListings></MyListings>
+          </PrivateRoute>
+        ),
         loader: async () => {
           const response = await fetch('http://localhost:3000/listings');
           if (!response.ok) {
