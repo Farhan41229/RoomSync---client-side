@@ -5,6 +5,7 @@ import { AuthContext } from '../provider/AuthProvider';
 import HomeListings from '../components/HomeListings';
 import Footer from '../components/Footer';
 import ReviewSliders from '../components/ReviewSliders';
+import OurServices from '../components/OurServices';
 const listingsPromise = fetch('http://localhost:3000/listingstop6').then(
   (res) => res.json()
 );
@@ -27,6 +28,7 @@ const HomeLayout = () => {
       </header>
       <main>
         <HomeListings listingsPromise={listingsPromise}></HomeListings>
+        <OurServices></OurServices>
         <ReviewSliders></ReviewSliders>
       </main>
       <footer>
