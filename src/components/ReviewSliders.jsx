@@ -7,19 +7,19 @@ import 'swiper/css/pagination';
 
 const testimonials = [
   {
-    text: `"Subscribely is a game changer. It gives us access to a variety of tech subscriptions, from streaming services like Netflix to productivity tools like Grammarly. Perfect for anyone who wants to manage their subscriptions in one place."`,
+    text: `"Roommate Finder has been a lifesaver for me. I found the perfect roommate just days after signing up. The platform is so easy to use, and I was able to browse listings from students and young professionals in NYC looking for affordable living options."`,
     author: 'Sarah Williams',
-    title: 'CEO of Netflix',
+    title: 'Senior Student at NYU',
   },
   {
-    text: `"Subscribely has saved us so much time and money. We can now manage all our subscriptions in one place and make adjustments on the fly. A must-have for any tech enthusiast!"`,
+    text: `"Finding a roommate has never been easier! Roommate Finder helped me connect with fellow graduates from nearby universities. It’s the go-to platform for anyone in NYC trying to save on rent while finding a trustworthy roommate."`,
     author: 'John Doe',
-    title: 'CTO of DevSolutions',
+    title: 'Recent Graduate from Columbia University',
   },
   {
-    text: `"Subscribely has made managing my subscriptions so much easier. From ChatGPT to Spotify, everything is streamlined. I love how simple and efficient it is to keep track of my plans."`,
+    text: `"I was able to find a great roommate through Roommate Finder. The platform made it super simple to filter by preferences, and it’s especially great for students and young professionals in NYC. Definitely recommend it!"`,
     author: 'Emily Smith',
-    title: 'Product Designer at PixelCraft',
+    title: 'Product Designer at a Tech Startup in NYC',
   },
 ];
 
