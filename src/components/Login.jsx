@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../provider/AuthProvider';
+import Swal from 'sweetalert2';
 
 const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { setUser, userLogin } = useContext(AuthContext);
+
   const HandleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -17,9 +19,22 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         setUser(user);
+        Swal.fire({
+          title: 'User Logged in successfully',
+          icon: 'success',
+          draggable: true,
+        });
         navigate(`${location.state ? location.state : '/'}`);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Login Failed',
+          text: error,
+          footer: '<a href="#">Why do I have this issue?</a>',
+        });
+      });
   };
   return (
     <section className="bg-gray-50 dark:bg-gray-900">

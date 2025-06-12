@@ -1,10 +1,40 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router';
 import { AuthContext } from '../provider/AuthProvider';
 import Swal from 'sweetalert2';
 
 const Register = () => {
   const { setUser, CreateUser, setDBuser, DBuser } = useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState('');
+  function validatePassword(password) {
+    // Check if the password has at least one uppercase letter
+    const hasUppercase = /[A-Z]/.test(password);
+
+    // Check if the password has at least one lowercase letter
+    const hasLowercase = /[a-z]/.test(password);
+
+    // Check if the password has a length of at least 6 characters
+    const isLongEnough = password.length >= 6;
+
+    // If any condition is not met, set the error message
+    if (!hasUppercase) {
+      setErrorMessage('Password must contain at least one uppercase letter.');
+      return false;
+    }
+    if (!hasLowercase) {
+      setErrorMessage('Password must contain at least one lowercase letter.');
+      return false;
+    }
+    if (!isLongEnough) {
+      setErrorMessage('Password must be at least 6 characters long.');
+      return false;
+    }
+
+    // If all conditions are met, clear the error message
+    setErrorMessage('');
+    return true;
+  }
+  // console.log('Error Message,', errorMessage);
   const HandleRegister = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -17,52 +47,62 @@ const Register = () => {
       photoUrl,
     };
 
-    // Create a Firebase user
-    CreateUser(email, password)
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
+    if (validatePassword(password)) {
+      // Create a Firebase user
+      CreateUser(email, password)
+        .then((result) => {
+          const user = result.user;
+          setUser(user);
 
-        // Add the user to MongoDB
-        fetch('http://localhost:3000/users', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(dbuser),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log('Data after adding the user', data);
-
-            // Set the MongoDB user data in the state
-            setDBuser(data); // Use the MongoDB data returned from the server
-
-            Swal.fire({
-              title: 'User Registered Successfully',
-              icon: 'success',
-              draggable: true,
-            });
+          // Add the user to MongoDB
+          fetch('http://localhost:3000/users', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dbuser),
           })
-          .catch((error) => {
-            console.log('Error adding MongoDB user:', error);
-            Swal.fire({
-              title: 'Error adding user',
-              icon: 'error',
-              text: error.message,
-              draggable: true,
+            .then((res) => res.json())
+            .then((data) => {
+              console.log('Data after adding the user', data);
+
+              // Set the MongoDB user data in the state
+              setDBuser(data); // Use the MongoDB data returned from the server
+
+              Swal.fire({
+                title: 'User Registered Successfully',
+                icon: 'success',
+                draggable: true,
+              });
+            })
+            .catch((error) => {
+              console.log('Error adding MongoDB user:', error);
+              Swal.fire({
+                title: 'Error adding user',
+                icon: 'error',
+                text: error.message,
+                draggable: true,
+              });
             });
+          // Navigate back to the login Page
+        })
+        .catch((error) => {
+          console.log(error);
+          Swal.fire({
+            title: 'Registration Error',
+            icon: 'error',
+            text: error.message,
+            draggable: true,
           });
-      })
-      .catch((error) => {
-        console.log(error);
-        Swal.fire({
-          title: 'Registration Error',
-          icon: 'error',
-          text: error.message,
-          draggable: true,
         });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Validation Failed',
+        text: errorMessage,
+          footer: '<a href="#">Why do I have this issue?</a>',
       });
+    }
   };
 
   return (

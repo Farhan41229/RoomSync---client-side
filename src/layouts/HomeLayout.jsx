@@ -3,6 +3,8 @@ import Header from '../components/Header';
 import Banner from '../components/Banner';
 import { AuthContext } from '../provider/AuthProvider';
 import HomeListings from '../components/HomeListings';
+import Footer from '../components/Footer';
+import ReviewSliders from '../components/ReviewSliders';
 const listingsPromise = fetch('http://localhost:3000/listingstop6').then(
   (res) => res.json()
 );
@@ -25,8 +27,11 @@ const HomeLayout = () => {
       </header>
       <main>
         <HomeListings listingsPromise={listingsPromise}></HomeListings>
+        <ReviewSliders></ReviewSliders>
       </main>
-      <footer></footer>
+      <footer>
+        <Footer></Footer>
+      </footer>
     </div>
   );
 };
