@@ -55,7 +55,7 @@ const Register = () => {
           setUser(user);
 
           // Add the user to MongoDB
-          fetch('http://localhost:3000/users', {
+          fetch('https://room-sync-server-one.vercel.app/users', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ const Register = () => {
         icon: 'error',
         title: 'Validation Failed',
         text: errorMessage,
-          footer: '<a href="#">Why do I have this issue?</a>',
+        footer: '<a href="#">Why do I have this issue?</a>',
       });
     }
   };

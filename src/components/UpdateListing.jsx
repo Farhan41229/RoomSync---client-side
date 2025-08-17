@@ -20,7 +20,7 @@ const UpdateListing = () => {
 
     console.log(ListingData); // Now you will get the correctly structured object with availability
     // Send updated Listing to the DB
-    fetch(`http://localhost:3000/listings/${_id}`, {
+    fetch(`https://room-sync-server-one.vercel.app/listings/${_id}`, {
       method: 'PUT',
       headers: {
         'content-type': 'application/json',

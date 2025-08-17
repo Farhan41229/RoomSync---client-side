@@ -45,7 +45,7 @@ const AuthProvider = ({ children }) => {
         try {
           // Fetch the MongoDB user using the Firebase user email
           const response = await fetch(
-            `http://localhost:3000/users/${currentUser.email}`
+            `https://room-sync-server-one.vercel.app/users/${currentUser.email}`
           );
           const currentDBuser = await response.json();
           console.log(currentDBuser); // You can remove this after testing

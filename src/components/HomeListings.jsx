@@ -26,7 +26,7 @@ const HomeListings = ({ listingsPromise }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         // Delete Listing from MongoDB
-        fetch(`http://localhost:3000/listings/${id}`, {
+        fetch(`https://room-sync-server-one.vercel.app/listings/${id}`, {
           method: 'DELETE',
         })
           .then((res) => res.json())

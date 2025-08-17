@@ -6,9 +6,9 @@ import HomeListings from '../components/HomeListings';
 import Footer from '../components/Footer';
 import ReviewSliders from '../components/ReviewSliders';
 import OurServices from '../components/OurServices';
-const listingsPromise = fetch('http://localhost:3000/listingstop6').then(
-  (res) => res.json()
-);
+const listingsPromise = fetch(
+  'https://room-sync-server-one.vercel.app/listingstop6'
+).then((res) => res.json());
 console.log(listingsPromise);
 const HomeLayout = () => {
   const { UserLoading } = useContext(AuthContext);

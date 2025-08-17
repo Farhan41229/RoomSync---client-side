@@ -19,7 +19,7 @@ const AddListing = () => {
     console.log(ListingData); // Now you will get the correctly structured object with availability
 
     // Adding the listing to the MongoDB Server
-    fetch('http://localhost:3000/listings', {
+    fetch('https://room-sync-server-one.vercel.app/listings', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -26,7 +26,9 @@ const router = createBrowserRouter([
         path: 'alllistings',
         element: <AllListings></AllListings>,
         loader: async () => {
-          const response = await fetch('http://localhost:3000/listings');
+          const response = await fetch(
+            'https://room-sync-server-one.vercel.app/listings'
+          );
           if (!response.ok) {
             throw new Error('Failed to fetch listings');
           }
@@ -42,7 +44,7 @@ const router = createBrowserRouter([
         ),
         loader: async ({ params }) => {
           const response = await fetch(
-            `http://localhost:3000/listings/${params.id}`
+            `https://room-sync-server-one.vercel.app/listings/${params.id}`
           );
           if (!response.ok) {
             throw new Error('Failed to fetch listings');
@@ -59,7 +61,7 @@ const router = createBrowserRouter([
         ),
         loader: async ({ params }) => {
           const response = await fetch(
-            `http://localhost:3000/listings/${params.id}`
+            `https://room-sync-server-one.vercel.app/listings/${params.id}`
           );
           if (!response.ok) {
             throw new Error('Failed to fetch listings');
@@ -75,7 +77,9 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: async () => {
-          const response = await fetch('http://localhost:3000/listings');
+          const response = await fetch(
+            'https://room-sync-server-one.vercel.app/listings'
+          );
           if (!response.ok) {
             throw new Error('Failed to fetch listings');
           }
