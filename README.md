@@ -146,11 +146,6 @@ src/
 - `npm run lint` - Run ESLint
 
 
-
-## 👨‍💻 Author
-
-**Your Name**
-
 ## 🙏 Acknowledgments
 
 - Firebase for authentication services
