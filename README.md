@@ -1,6 +1,6 @@
 # 🏠 RoomSync - Roommate Finding Platform
 
-![RoomSync Banner](https://i.ibb.co/kgd2hxd5/undraw-developer-avatar-f6ac.png)
+
 
 ## 📖 Description
 
